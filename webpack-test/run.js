@@ -1,0 +1,22 @@
+const config = require("./webpack.config.js");
+const chalk = require("chalk");
+const { webpack } = require("../lib/index.js");
+
+const compiler = webpack(config);
+
+compiler.watch(
+	{
+		aggregateTimeout: 300,
+		poll: undefined
+	},
+	(err, stats) => {
+		if (err || stats.hasErrors()) {
+			// [Handle errors here](#error-handling)
+			console.log(chalk.red("run webpack error", stats.toString()));
+			process.exit(1);
+		}
+
+		console.log(chalk.blue("running webpack..."));
+		// Done processing
+	}
+);
