@@ -1,11 +1,10 @@
-function util1(util1) {
-	console.log(__filename, "util1", util1);
-}
-function util2(util2) {
-	console.log(__filename, "util2", util2);
+const util1fun = require("./util1.js");
+
+function util1() {
+	console.log("util1");
 }
 
 module.exports = {
 	util1,
-	util2
+	util1fun
 };

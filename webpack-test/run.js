@@ -1,8 +1,8 @@
 const config = require("./webpack.config.js");
 const chalk = require("chalk");
 const { webpack } = require("../lib/index.js");
-
-const compiler = webpack(config);
+const webpack1 = require("../lib/index.js");
+const compiler = webpack1(config);
 
 compiler.watch(
 	{

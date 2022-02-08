@@ -1,10 +1,10 @@
 const { util1 } = require("./util/util.js");
-const { a } = require("./a");
+const { a } = require("./a.js");
 
 function main() {
-	util1("sdfsdf");
+	const b = 12;
+	util1("sdfsdf", b);
 	a();
-	console.log(__filename, "this is mainjs");
 }
 
 main();

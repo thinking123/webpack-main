@@ -1,0 +1,67 @@
+## thisCompilation plugin hooks
+
+0:{type: 'sync', fn: ƒ, name: 'ArrayPushCallbackChunkFormatPlugin'}
+1:{type: 'sync', fn: ƒ, name: 'JsonpChunkLoadingPlugin'}
+2:{type: 'sync', fn: ƒ, name: 'StartupChunkDependenciesPlugin'}
+3:{type: 'sync', fn: ƒ, name: 'ImportScriptsChunkLoadingPlugin'}
+4:{type: 'sync', fn: ƒ, name: 'FetchCompileWasmPlugin'}
+5:{type: 'sync', fn: ƒ, name: 'FetchCompileAsyncWasmPlugin'}
+6:{type: 'sync', fn: ƒ, name: 'WorkerPlugin'}
+7:{type: 'sync', fn: ƒ, name: 'WarnNoModeSetPlugin'}
+8:{type: 'sync', fn: ƒ, name: 'SplitChunksPlugin'}
+9:{type: 'sync', fn: ƒ, name: 'ResolverCachePlugin'}
+
+## compilation plugin hooks
+
+0:{type: 'sync', fn: ƒ, name: 'ChunkPrefetchPreloadPlugin'}
+1:{type: 'sync', fn: ƒ, name: 'JavascriptModulesPlugin'}
+2:{type: 'sync', fn: ƒ, name: 'JsonModulesPlugin'}
+3:{type: 'sync', fn: ƒ, name: 'AssetModulesPlugin'}
+4:{type: 'sync', fn: ƒ, name: 'EntryPlugin'}
+5:{type: 'sync', fn: ƒ, name: 'RuntimePlugin'}
+6:{type: 'sync', fn: ƒ, name: 'InferAsyncModulesPlugin'}
+7:{type: 'sync', fn: ƒ, name: 'DataUriPlugin'}
+8:{type: 'sync', fn: ƒ, name: 'FileUriPlugin'}
+9:{type: 'sync', fn: ƒ, name: 'CompatibilityPlugin'}
+10:{type: 'sync', fn: ƒ, name: 'HarmonyModulesPlugin'}
+11:{type: 'sync', fn: ƒ, name: 'AMDPlugin'}
+12:{type: 'sync', fn: ƒ, name: 'RequireJsStuffPlugin'}
+13:{type: 'sync', fn: ƒ, name: 'CommonJsPlugin'}
+14:{type: 'sync', fn: ƒ, name: 'LoaderPlugin'}
+15:{type: 'sync', fn: ƒ, name: 'LoaderPlugin'}
+16:{type: 'sync', fn: ƒ, name: 'NodeStuffPlugin'}
+17:{type: 'sync', fn: ƒ, name: 'APIPlugin'}
+18:{type: 'sync', fn: ƒ, name: 'ExportsInfoApiPlugin'}
+19:{type: 'sync', fn: ƒ, name: 'WebpackIsIncludedPlugin'}
+20:{type: 'sync', fn: ƒ, name: 'ConstPlugin'}
+21:{type: 'sync', fn: ƒ, name: 'UseStrictPlugin'}
+22:{type: 'sync', fn: ƒ, name: 'RequireIncludePlugin'}
+23:{type: 'sync', fn: ƒ, name: 'RequireEnsurePlugin'}
+24:{type: 'sync', fn: ƒ, name: 'RequireContextPlugin'}
+25:{type: 'sync', fn: ƒ, name: 'ImportPlugin'}
+26:{type: 'sync', fn: ƒ, name: 'SystemPlugin'}
+27:{type: 'sync', fn: ƒ, name: 'ImportMetaPlugin'}
+28:{type: 'sync', fn: ƒ, name: 'URLPlugin'}
+29:{type: 'sync', fn: ƒ, name: 'DefaultStatsFactoryPlugin'}
+30:{type: 'sync', fn: ƒ, name: 'DefaultStatsPresetPlugin'}
+31:{type: 'sync', fn: ƒ, name: 'DefaultStatsPrinterPlugin'}
+32:{type: 'sync', fn: ƒ, name: 'JavascriptMetaInfoPlugin'}
+33:{type: 'sync', fn: ƒ, name: 'EnsureChunkConditionsPlugin'}
+34:{type: 'sync', fn: ƒ, name: 'RemoveEmptyChunksPlugin'}
+35:{type: 'sync', fn: ƒ, name: 'MergeDuplicateChunksPlugin'}
+36:{type: 'sync', fn: ƒ, name: 'FlagIncludedChunksPlugin'}
+37:{type: 'sync', fn: ƒ, name: 'SideEffectsFlagPlugin'}
+38:{type: 'sync', fn: ƒ, name: 'FlagDependencyExportsPlugin'}
+39:{type: 'sync', fn: ƒ, name: 'FlagDependencyUsagePlugin'}
+40:{type: 'sync', fn: ƒ, name: 'InnerGraphPlugin'}
+41:{type: 'sync', fn: ƒ, name: 'MangleExportsPlugin'}
+42:{type: 'sync', fn: ƒ, name: 'ModuleConcatenationPlugin'}
+43:{type: 'sync', fn: ƒ, name: 'NoEmitOnErrorsPlugin'}
+44:{type: 'sync', fn: ƒ, name: 'RealContentHashPlugin'}
+45:{type: 'sync', fn: ƒ, name: 'WasmFinalizeExportsPlugin'}
+46:{type: 'sync', fn: ƒ, name: 'DeterministicModuleIdsPlugin'}
+47:{type: 'sync', fn: ƒ, name: 'DeterministicChunkIdsPlugin'}
+48:{type: 'sync', fn: ƒ, name: 'DefinePlugin'}
+49:{type: 'sync', fn: ƒ, name: 'TerserPlugin'}
+50:{type: 'sync', fn: ƒ, name: 'TemplatedPathPlugin'}
+51:{type: 'sync', fn: ƒ, name: 'RecordIdsPlugin'}

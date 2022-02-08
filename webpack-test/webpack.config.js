@@ -4,9 +4,13 @@ const resolvePath = filePath => {
 };
 const config = {
 	entry: resolvePath("src/main.js"),
+	mode: "production",
 	output: {
 		filename: "[name].js",
 		path: resolvePath("dist")
+	},
+	optimization: {
+		runtimeChunk: "single"
 	}
 };
 
