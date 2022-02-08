@@ -4,7 +4,8 @@ const resolvePath = filePath => {
 };
 const config = {
 	entry: resolvePath("src/main.js"),
-	mode: "production",
+	// mode: "production",
+	mode: "development",
 	output: {
 		filename: "[name].js",
 		path: resolvePath("dist")
