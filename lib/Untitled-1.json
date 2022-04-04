@@ -1,0 +1,42 @@
+[
+  { "mimetype": "application/node", "type": "javascript/auto" },
+
+  { "test": {}, "type": "json" },
+
+  { "mimetype": "application/json", "type": "json" },
+
+  {
+    "test": {},
+    "type": "javascript/esm",
+    "resolve": { "byDependency": { "esm": { "fullySpecified": true } } }
+  },
+
+  {
+    "test": {},
+    "descriptionData": { "type": "module" },
+    "type": "javascript/esm",
+    "resolve": { "byDependency": { "esm": { "fullySpecified": true } } }
+  },
+
+  { "test": {}, "type": "javascript/dynamic" },
+
+  {
+    "test": {},
+    "descriptionData": { "type": "commonjs" },
+    "type": "javascript/dynamic"
+  },
+
+  {
+    "mimetype": { "or": ["text/javascript", "application/javascript"] },
+    "type": "javascript/esm",
+    "resolve": { "byDependency": { "esm": { "fullySpecified": true } } }
+  },
+  {
+    "dependency": "url",
+    "oneOf": [
+      { "scheme": {}, "type": "asset/inline" },
+      { "type": "asset/resource" }
+    ]
+  },
+  { "assert": { "type": "json" }, "type": "json" }
+]

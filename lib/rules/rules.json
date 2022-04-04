@@ -1,0 +1,134 @@
+[
+  {
+    "conditions": [],
+    "effects": [],
+    "rules": [
+      {
+        "conditions": [{ "property": "mimetype", "matchWhenEmpty": false }],
+        "effects": [{ "type": "type", "value": "javascript/auto" }]
+      },
+      {
+        "conditions": [{ "property": "resource", "matchWhenEmpty": false }],
+        "effects": [{ "type": "type", "value": "json" }]
+      },
+      {
+        "conditions": [{ "property": "mimetype", "matchWhenEmpty": false }],
+        "effects": [{ "type": "type", "value": "json" }]
+      },
+      {
+        "conditions": [{ "property": "resource", "matchWhenEmpty": false }],
+        "effects": [
+          { "type": "type", "value": "javascript/esm" },
+          {
+            "type": "resolve",
+            "value": { "byDependency": { "esm": { "fullySpecified": true } } }
+          }
+        ]
+      },
+      {
+        "conditions": [
+          { "property": "resource", "matchWhenEmpty": false },
+          { "property": ["descriptionData", "type"], "matchWhenEmpty": false }
+        ],
+        "effects": [
+          { "type": "type", "value": "javascript/esm" },
+          {
+            "type": "resolve",
+            "value": { "byDependency": { "esm": { "fullySpecified": true } } }
+          }
+        ]
+      },
+      {
+        "conditions": [{ "property": "resource", "matchWhenEmpty": false }],
+        "effects": [{ "type": "type", "value": "javascript/dynamic" }]
+      },
+      {
+        "conditions": [
+          { "property": "resource", "matchWhenEmpty": false },
+          { "property": ["descriptionData", "type"], "matchWhenEmpty": false }
+        ],
+        "effects": [{ "type": "type", "value": "javascript/dynamic" }]
+      },
+      {
+        "conditions": [{ "property": "mimetype", "matchWhenEmpty": false }],
+        "effects": [
+          { "type": "type", "value": "javascript/esm" },
+          {
+            "type": "resolve",
+            "value": { "byDependency": { "esm": { "fullySpecified": true } } }
+          }
+        ]
+      },
+      {
+        "conditions": [{ "property": "dependency", "matchWhenEmpty": false }],
+        "effects": [],
+        "oneOf": [
+          {
+            "conditions": [{ "property": "scheme", "matchWhenEmpty": false }],
+            "effects": [{ "type": "type", "value": "asset/inline" }]
+          },
+          {
+            "conditions": [],
+            "effects": [{ "type": "type", "value": "asset/resource" }]
+          }
+        ]
+      },
+      {
+        "conditions": [
+          { "property": ["assertions", "type"], "matchWhenEmpty": false }
+        ],
+        "effects": [{ "type": "type", "value": "json" }]
+      }
+    ]
+  },
+  {
+    "conditions": [],
+    "effects": [],
+    "rules": [
+      {
+        "conditions": [{ "property": "resource", "matchWhenEmpty": false }],
+        "effects": [{ "type": "use", "value": { "loader": "url-loader" } }]
+      },
+      {
+        "conditions": [
+          { "property": "resource", "matchWhenEmpty": false },
+          { "property": "resource", "matchWhenEmpty": true }
+        ],
+        "effects": [
+          {
+            "type": "use",
+            "value": {
+              "loader": "babel-loader",
+              "options": {
+                "presets": [
+                  ["@babel/preset-react", { "runtime": "automatic" }],
+                  "@babel/preset-env"
+                ]
+              },
+              "ident": "ruleSet[1].rules[1].use"
+            }
+          }
+        ]
+      },
+      {
+        "conditions": [{ "property": "resource", "matchWhenEmpty": false }],
+        "effects": [
+          {
+            "type": "use",
+            "value": {
+              "loader": "/Users/a/github/zstack/local-test/node_modules/style-loader/dist/cjs.js"
+            }
+          },
+          {
+            "type": "use",
+            "value": {
+              "loader": "/Users/a/github/zstack/local-test/node_modules/css-loader/dist/cjs.js",
+              "options": { "sourceMap": true },
+              "ident": "ruleSet[1].rules[2].use[1]"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

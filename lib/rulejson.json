@@ -1,0 +1,8 @@
+{
+  "scheme": "data",
+  "mimetype": "text/javascript",
+  "dependency": "esm",
+  "issuer": "",
+  "compiler": "HtmlWebpackCompiler",
+  "issuerLayer": ""
+}
