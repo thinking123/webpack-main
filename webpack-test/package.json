@@ -1,7 +1,0 @@
-{
-  "sideEffects": [
-    "./src/main.js",
-    "./src/util/util.js",
-    "./src/util/util-export.js"
-  ]
-}

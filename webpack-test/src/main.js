@@ -1,12 +1,15 @@
-// import {util1 as util2} from "./util/util.js"
-import funfs , {fun1 , const1 , startfun1 ,const1start} from './util/util-export'
-// const { util1 } = require("./util/util.js");
+// function bs(){
+// 	import("./util/util-export-start.js").then(data => {
+// 		console.log(data);
+// 	});
+// }
 
-// console.log(__resourceQuery)
-// util1();
-// util2()
+// bs()
+// import b12 from './index.css'
+// import ob from './other.less'
 
+// const b = "12";
 
-funfs(const1)
-fun1(const1)
-startfun1(const1start)
+console.log("svg12", b12.bs12);
+console.log("svg12sdfsdlfjsldkfjlsdkfjlsdkfjls1212dkfj", b12.bs12);
+// console.log("svg", ob);
