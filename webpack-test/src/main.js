@@ -1,15 +1,44 @@
-// function bs(){
-// 	import("./util/util-export-start.js").then(data => {
-// 		console.log(data);
-// 	});
+// import { usedFunction } from "./other.js";
+// // const b = require('')
+// const sdkfjsldfkjsldfkjsldfj = 12
+
+// // usedFunction()
+// import x from "x";
+
+// import b from "./b";
+
+// import("./b");
+
+import b from './index.js'
+import b1 from './a'
+import b2 from './b.js'
+
+
+
+console.log("b" , b);
+// console.log(require("dll/index.js"));
+// console.log(require("beta12"));
+
+// function fs() {
+// 	console.log("click fs");
+// 	const fs = "b";
+// 	// require('./main.js')
+// 	// require(
+// 	// `./dir/${fs}.js`
+// 	// )
+
+// 	import("fuck/dir");
+// }
+// console.log("x, b");
+
+// function cc() {
+// 	const div = document.createElement("div");
+// 	div.style = "width:100px;height:100px;background:#DFDDFD;";
+// 	div.onclick = fs;
+// 	document.body.appendChild(div);
 // }
 
-// bs()
-// import b12 from './index.css'
-// import ob from './other.less'
+// // exports('./main.js')
+// cc();
 
-// const b = "12";
-
-console.log("svg12", b12.bs12);
-console.log("svg12sdfsdlfjsldkfjlsdkfjlsdkfjls1212dkfj", b12.bs12);
-// console.log("svg", ob);
+// fs();
