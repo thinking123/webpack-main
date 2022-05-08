@@ -10,7 +10,7 @@ if (typeof EventSource !== "function") {
 
 var urlBase = decodeURIComponent(__resourceQuery.slice(1));
 var activeEventSource;
-var activeKeys = new Map();
+var activeKeys = new Map();//代理的 [request]
 var errorHandlers = new Set();
 
 var updateEventSource = function updateEventSource() {
