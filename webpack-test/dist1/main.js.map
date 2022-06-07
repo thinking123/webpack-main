@@ -1,0 +1,32 @@
+{
+	"version": 3,
+	"file": "main.js",
+	"mappings": ";;;;;;;;;;;;;;AAAA;AACA,iEAAe,CAAC,uBAAuB;;;;;;UCDvC;UACA;;UAEA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;UACA;;UAEA;UACA;;UAEA;UACA;UACA;;;;;WCtBA;WACA;WACA;WACA;WACA,yCAAyC,wCAAwC;WACjF;WACA;WACA;;;;;WCPA;;;;;WCAA;WACA;WACA;WACA,uDAAuD,iBAAiB;WACxE;WACA,gDAAgD,aAAa;WAC7D;;;;;;;;;;;;;;;;ACNA;AACA;AACA;AACA;AACA;AACA;AAEA;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AAEA;AACA;AACA;;SAEeC;;;;;gEAAf;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBAEOC,OAAO,CAAC,UAACC,GAAD,EAAMC,GAAN,EAAc;AAC3BC,cAAAA,UAAU,CAAC,YAAM;AAChBF,gBAAAA,GAAG,CAAC,EAAD,CAAH;AACA,eAFS,CAAV;AAGA,aAJY,CAFd;;AAAA;AAOCG,YAAAA,OAAO,CAACC,GAAR,CAAY,IAAZ;;AAPD;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;AAUAN,EAAE,CAACD,kDAAD,CAAF,EACA;AACA;AAEA;AAEA;AACA;AACA,I",
+	"sources": [
+		"webpack://webpack/./webpack-test/src/index.css?429e",
+		"webpack://webpack/webpack/bootstrap",
+		"webpack://webpack/webpack/runtime/define property getters",
+		"webpack://webpack/webpack/runtime/hasOwnProperty shorthand",
+		"webpack://webpack/webpack/runtime/make namespace object",
+		"webpack://webpack/./webpack-test/src/a.js"
+	],
+	"sourcesContent": [
+		"// extracted by mini-css-extract-plugin\nexport default {\"fs1\":\"fs1_R41JY_ptdS\"};",
+		"// The module cache\nvar __webpack_module_cache__ = {};\n\n// The require function\nfunction __webpack_require__(moduleId) {\n\t// Check if module is in cache\n\tvar cachedModule = __webpack_module_cache__[moduleId];\n\tif (cachedModule !== undefined) {\n\t\treturn cachedModule.exports;\n\t}\n\t// Create a new module (and put it into the cache)\n\tvar module = __webpack_module_cache__[moduleId] = {\n\t\t// no module.id needed\n\t\t// no module.loaded needed\n\t\texports: {}\n\t};\n\n\t// Execute the module function\n\t__webpack_modules__[moduleId](module, module.exports, __webpack_require__);\n\n\t// Return the exports of the module\n\treturn module.exports;\n}\n\n",
+		"// define getter functions for harmony exports\n__webpack_require__.d = (exports, definition) => {\n\tfor(var key in definition) {\n\t\tif(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {\n\t\t\tObject.defineProperty(exports, key, { enumerable: true, get: definition[key] });\n\t\t}\n\t}\n};",
+		"__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))",
+		"// define __esModule on exports\n__webpack_require__.r = (exports) => {\n\tif(typeof Symbol !== 'undefined' && Symbol.toStringTag) {\n\t\tObject.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });\n\t}\n\tObject.defineProperty(exports, '__esModule', { value: true });\n};",
+		"// // import c from './c'\n// // import x1 from \"./a2\";\n// import style from './index.css'\n// // import x1 from \"y\";\n// // // import x from \"x\";\n// // import c from './a1'\n\n// import {fun} from \"./b\";\n\n// // function b() {\n// // console.log(\"afun\" , fun());\n// // }\n// // b(x)\n// console.log(\"x1, x12\",style);\n// // import(/* webpackChunkName: \"c\" */ \"./c.js\");\n// // import(/* webpackChunkName: \"d\" */ \"./d.js\");\n\n// // a(x) -> c -> d(x)\n// import path from 'path'\nimport ls from \"./index.css\"\n\nasync function fs() {\n\t// fun()\n\tawait Promise((res, rej) => {\n\t\tsetTimeout(() => {\n\t\t\tres(\"\");\n\t\t});\n\t});\n\tconsole.log(\"fs\");\n}\n\nfs(ls);\n// export function fs(){\n// \tconsole.log(path.join(__dirname , 'a.js'))\n\n// }\n\n// export default function fs1(){\n// \tconsole.log(path.join(__dirname , 'a.js'))\n// }\n"
+	],
+	"names": [
+		"ls",
+		"fs",
+		"Promise",
+		"res",
+		"rej",
+		"setTimeout",
+		"console",
+		"log"
+	],
+	"sourceRoot": ""
+}

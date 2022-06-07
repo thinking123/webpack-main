@@ -5,18 +5,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const rimraf = require("rimraf");
 const BundleAnalyzerPlugin =
 	require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const { DllReferencePlugin } = require("../lib");
+const { DllReferencePlugin, DefinePlugin } = require("../lib");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+// const TerserPlugin = require('terser-webpack-plugin')
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-
+const JsxInlineModuleId = require("./custom-hooks/jsx-inline-module-id-hook");
+const JsxSourceMap = require("./custom-hooks/source-map-hook");
 const HotModuleReplacementPlugin = require("../lib/HotModuleReplacementPlugin");
 
 const smp = new SpeedMeasurePlugin();
 
 const loader = require("./utils/loader1");
+const { limit } = require("@webassemblyjs/ast/lib/nodes");
 const resolvePath = filePath => {
 	return path.resolve(__dirname, filePath);
 };
@@ -34,10 +37,78 @@ const setConfig = (
 };
 
 rimraf.sync(path.join(__dirname, "dist"));
+
+// `data:text/jsx,import React from 'react';const App = () => {return (<div>sdfsdfsdf</div>)}export {App}`
+let jsx = `import React from 'react';
+const App = () => {
+	const [s,st]=React.useState(0)
+	return (
+		<div>
+		sdfsdfsdf
+		<div>
+		"fs" : {s}
+		</div>
+		</div>
+	)
+}
+
+export {App}
+`;
+
+jsx = `
+
+
+export default function fs(){
+	let b = 12
+	console.log("sdf" , b)
+}
+`;
+
+/*
+.md -> .jsx
+encodeURIComponent(jsx) -> sourcefile-line${index}.jsx
+*/
+// jsx=`data:text/jsx,${encodeURIComponent(jsx)}`
+jsx = `data:text/js,${encodeURIComponent(jsx)}`;
+
+// const jsx1 = `data:text/js,${encodeURIComponent(jsx)}`;
+fs.writeFileSync(
+	path.join(__dirname, "./a.js"),
+	`
+	import fs from "${jsx}"
+	import fs1 from "${jsx};"
+	import mdFun from "./b.md"
+	fs()
+	fs1()
+	mdFun()
+`
+);
 const getConfig = () => ({
 	parallelism: 1,
-	// entry: () => resolvePath("src/main.js"),
-	entry: () => resolvePath("lazy-compilation/index.js"),
+	// devtool: "source-map",
+	// devtool: "eval",
+
+	// entry: () => `!!${resolvePath("src/main.js")}`,
+
+	entry: {
+		// "browser-detect":  path.join(__dirname, "./src/browser-detect.js"),
+
+		main: {
+			// import: jsx,
+			// import: path.join(__dirname, "./a.js")
+			import: path.join(__dirname, "./src/a.js")
+			// import: path.join(__dirname, "./src/index.ts")
+			// dependOn:['b']
+		}
+		// d: resolvePath("src/d.js"),
+		// b: resolvePath("src/b.js"),
+		// a: resolvePath("src/a.js"),
+		// c:{
+		// 	import: resolvePath("src/c.js"),
+		// 	dependOn:['a']
+		// },
+	},
+	// entry: () => resolvePath("lazy-compilation/index.js"),
 	// entry: {
 	// 	main: {
 	// 		// import: resolvePath("src/main.js"),
@@ -52,10 +123,11 @@ const getConfig = () => ({
 	// 	// other: { import: resolvePath("src/other.js") , runtime:"funk" },
 	// 	// lodash1: ["lodash"]
 	// },
+	// target:'node',
 	experiments: {
-		lazyCompilation: {
-			test: () => true
-		}
+		// lazyCompilation: {
+		// 	test: () => true
+		// }
 		// asyncWebAssembly: true,
 		// buildHttp: true,
 		// layers: true
@@ -68,17 +140,17 @@ const getConfig = () => ({
 	// entry: resolvePath("src/commonjs-main.js"),
 	// mode: "production",
 	mode: "development",
-	// externals: {
-	// 	lodash: {
-	// 		commonjs: "lodash",
-	// 		// commonjs2: "lodash",
-	// 		// amd: "lodash",
-	// 		// root: "_"
-	// 	}
-	// },
+	externals: {
+		lodash: "_"
+	},
 	output: {
 		filename: "[name].js",
-		path: resolvePath("dist")
+		path: resolvePath("dist"),
+		publicPath: "auto"
+		// library: {
+		// 	// name: 'MyLibrary',
+		// 	type: "commonjs"
+		// }
 		// library: "MyLibrary",
 		// publicPath: "fucksdf",
 		// library: {
@@ -90,33 +162,112 @@ const getConfig = () => ({
 		port: 9001
 	},
 	resolve: {
-		extensions: [".js", ".json", ".tsx"],
+		extensions: [".js", ".json", ".tsx", ".ts"],
 		alias: {
 			fuck$: path.join(__dirname, "./src/index.js"),
 			fuck: path.join(__dirname, "./src")
 		}
 	},
 	module: {
+		defaultRules: [
+			{
+				mimetype: "application/node",
+				type: "javascript/auto"
+			}
+		],
 		rules: [
+			{
+				test: /\.tsx?$/,
+				// mimetype: "text/jsx",
+				use: [
+					// {
+					//   loader: require.resolve("babel-loader"),
+					//   options: babelConfig,
+					// },
+					{
+						loader: require.resolve("ts-loader"),
+						options: {
+							// getCustomTransformers: () => ({
+							//   before: [isDevelopment && ReactRefreshTypeScript()].filter(
+							//     Boolean
+							//   ),
+							// }),
+							transpileOnly: false,
+							// onlyCompileBundledFiles: true,
+							compilerOptions: {
+								declaration: false
+								// skipLibCheck: true
+							},
+							configFile: path.resolve(__dirname, "tsconfig.json")
+						}
+					}
+				]
+			},
 			// {
-			// 	test: /\.js$/,
-			// 	use: {
-			// 		loader: path.resolve(__dirname, "utils/loader1")
-			// 	}
+			// 	mimetype: "text/js",
+			// 	use: [
+			// 		{
+			// 			loader: "babel-loader",
+			// 			options: {
+			// 				sourceMaps: true,
+			// 				presets: ["@babel/preset-env"]
+			// 			}
+			// 		}
+			// 		// {
+			// 		// 	loader: path.resolve(__dirname, "utils/jsx-loader.js")
+			// 		// }
+			// 	]
+			// },
+			// {
+			// 	test: /\.md$/,
+			// 	use: [
+			// 		{
+			// 			loader: "babel-loader",
+			// 			options: {
+			// 				sourceMaps: true,
+			// 				presets: ["@babel/preset-env"]
+			// 			}
+			// 		},
+			// 		{
+			// 			loader: path.resolve(__dirname, "utils/md-loader.js")
+			// 		}
+			// 	]
+			// },
+			// {
+			// 	test: /\.js$/
+			// 	// use: {
+			// 	// 	loader: "babel-loader",
+			// 	// 	options: {
+			// 	// 		sourceMaps: true,
+			// 	// 		presets: ["@babel/preset-env"]
+			// 	// 	}
+			// 	// }
 			// },
 			{
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				type: "asset/resource"
-			},
-			{
-				test: /\.css$/,
+				issuer: /\.js$/,
+				dependency: { not: ["url"] },
+				type: "javascript/auto",
 				use: [
 					{
-						loader: require.resolve("style-loader")
-					},
+						loader: require.resolve("url-loader"),
+						options: {
+							esModule: false,
+							limit: false
+						}
+					}
+				]
+				// type: "asset/resource",
+			},
+			{
+				test: /\.(le|c)ss$/,
+				use: [
 					// {
-					// 	loader: MiniCssExtractPlugin.loader
+					// 	loader: require.resolve("style-loader")
 					// },
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
 					{
 						loader: require.resolve("css-loader"),
 						options: {
@@ -134,26 +285,34 @@ const getConfig = () => ({
 							},
 							esModule: true
 						}
+					},
+					{
+						loader: require.resolve("less-loader"),
+						options: {
+							sourceMap: true,
+							lessOptions: {
+								javascriptEnabled: true,
+								math: "always"
+							}
+							// webpackImporter: false,
+						}
 					}
-					// {
-					// 	loader: require.resolve("less-loader"),
-					// 	options: {
-					// 		sourceMap: true,
-					// 		lessOptions: {
-					// 			javascriptEnabled: true
-					// 		}
-					// 		// webpackImporter: false,
-					// 	}
-					// }
 				]
 			}
 		]
 	},
 
 	plugins: [
-		// new MiniCssExtractPlugin(),
+		new DefinePlugin({
+			Pro: JSON.stringify(true),
+			Pro1: JSON.stringify("pro"),
+			"process.env.NODE_ENV": JSON.stringify({ fuck: "12" })
+		}),
+		new MiniCssExtractPlugin({
+			filename: "[name].[hash].css"
+		}),
 		// new HotModuleReplacementPlugin(),
-		new HtmlWebpackPlugin(),
+		// new HtmlWebpackPlugin(),
 		// new BundleAnalyzerPlugin()
 
 		// dll &&
@@ -173,6 +332,11 @@ const getConfig = () => ({
 				extensions: [".js", ".jsx"],
 				context: path.join(__dirname, "dll")
 			}),
+
+		// new JsxInlineModuleId({
+		// 	disabled: false
+		// }),
+		// new JsxSourceMap(),
 
 		html &&
 			function copyHtml(compiler) {
@@ -222,11 +386,26 @@ const getConfig = () => ({
 			}
 	].filter(Boolean),
 	optimization: {
-		// minimizer: [TerserPlugin()],
+		minimizer: [
+			new TerserPlugin({
+				extractComments: false,
+				terserOptions: {
+					mangle: {
+						keep_fnames: true,
+						keep_classnames: true
+					}
+					// sourceMap:true
+				}
+			})
+		],
 		// 141 , 60 , 106
 		// moduleIds: "deterministic",
 		// runtimeChunk: "single",
-		minimize: false
+		// minimize: false,
+		concatenateModules: false,
+		moduleIds: "named",
+		chunkIds: "named",
+
 		// concatenateModules:false,
 		// usedExports: true,
 
@@ -252,32 +431,49 @@ const getConfig = () => ({
 		// 	// 	}
 		// 	// }
 		// }
-		// splitChunks: {
-		// 	chunks: "all",
-		// 	cacheGroups: {
-		// 		dep1: {
-		// 			name:"dep1-name-cacheGroups",
-		// 			test:/main/,
-		// 			enforce: true,
-		// 			maxSize: 70,
-		// 			minSize: 1
-		// 		},
-		// 		dep2: {
-		// 			name:"dep2-name-cacheGroups",
-		// 			test:/common1/,
-		// 			enforce: true,
-		// 			maxSize: 121,
-		// 			minSize: 71
-		// 		},
-		// 		dep3: {
-		// 			name:"dep3-name-cacheGroups",
-		// 			test:/common2/,
-		// 			enforce: true,
-		// 			maxSize: 200,
-		// 			minSize: 130
-		// 		}
-		// 	}
-		// }
+		splitChunks: {
+			// chunks: "all",
+			// minSize: 2,
+			// minChunks: 2,
+			cacheGroups: {
+				default: false,
+				defaultVendors: false,
+				// dep1: {
+				// 	name:"bfun",
+				// 	enforce: true,
+				// 	reuseExistingChunk: true,
+				// 	// maxSize: 100,
+				// 	chunks:'all',
+				// 	minSize: 1,
+				// 	minChunks:1,
+				// 	usedExports: true
+				// },
+				css: {
+					chunks: "all",
+					idHint: "css1",
+					name: "css2",
+					minChunks: 1,
+					// minSize: 1,
+					priority: 2,
+					reuseExistingChunk: true,
+					type: "css/mini-extract",
+					test: /(le|c)ss$/i
+				}
+				// dep2: {
+				// 	name:"dep2-name-cacheGroups",
+				// 	reuseExistingChunk: true,
+				// 	// maxSize: 121,
+				// 	minSize: 1
+				// },
+				// dep3: {
+				// 	name:"dep3-name-cacheGroups",
+				// 	enforce: true,
+				// 	reuseExistingChunk: true,
+				// 	// maxSize: 200,
+				// 	minSize: 1
+				// }
+			}
+		}
 	}
 });
 

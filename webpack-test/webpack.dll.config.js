@@ -3,7 +3,7 @@ const { DllPlugin } = require("../lib");
 
 module.exports = {
 	mode: "development",
-	context: path.join(__dirname, "dll"),
+	context: __dirname,
 	// resolve: {
 	// 	extensions: [".js"]
 	// },
@@ -20,19 +20,22 @@ module.exports = {
 	// },
 
 	resolve: {
-		extensions: [".js", ".jsx"]
+		extensions: [".js"]
 	},
 	entry: {
 		// library:[
 		// 	'lodash'
 		// ]
-		beta12: {
-			import: path.join(__dirname, "src/index.js")
-			// library: {
-			// 	name: "AnotherLibrary12",
-			// 	type: "commonjs"
-			// }
-		}
+
+		library: ["./src/a.js", "./src/b.js"]
+
+		// beta12: {
+		// 	import: path.join(__dirname, "src/index.js")
+		// 	// library: {
+		// 	// 	name: "AnotherLibrary12",
+		// 	// 	type: "commonjs"
+		// 	// }
+		// }
 		// beta12sdfdsfsdfsdf: {
 		// 	import: path.join(__dirname, "dll/src/a.js"),
 		// 	library: {
@@ -46,19 +49,26 @@ module.exports = {
 	// },
 	output: {
 		path: path.join(__dirname, "dll-dist"),
-		filename: "MyDll.[name].js",
-		library: {
-			name: "[name]_[fullhash]",
-			type:'var'
-			// type: "commonjs-module"
-		}
+		// filename: "MyDll.[name].js",
+		// library: {
+		// 	name: "[name]_[fullhash]",
+		// 	type:'var'
+		// 	// type: "commonjs-module"
+		// }
+		// path: path.resolve(__dirname, './build/library'),
+		library: "[name]"
 		// library: "[name]_[fullhash]" // 设置 lib var 名称 :var beta12_12131ksdlf
 	},
 	plugins: [
 		new DllPlugin({
-			entryOnly: false,
-			path: path.join(__dirname, "dll-dist", "[name]-manifest.json"), // manifest json 文件名称
-			name: "[name]_[fullhash]" // manifest json name : {name : [name]_[fullhash]}
+			// entryOnly: false,
+			// path: path.join(__dirname, "dll-dist", "[name]-manifest.json"), // manifest json 文件名称
+			// name: "[name]_[fullhash]" // manifest json name : {name : [name]_[fullhash]}
+
+			name: "[name]",
+			// path: './build/library/[name].json'
+
+			path: path.join(__dirname, "dll-dist", "[name]-manifest.json")
 		})
 	]
 };

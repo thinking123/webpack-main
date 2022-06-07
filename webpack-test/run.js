@@ -19,11 +19,15 @@ setConfig({ dll, html: false });
 // });
 
 if (dll) {
-	const compilerDll = webpack1(dllConfig);
-
-	compilerDll.run(() => {
-		runWebapck();
+	const compilerDll = webpack1(dllConfig, err => {
+		if (err) {
+			console.log(err);
+		}
 	});
+
+	// compilerDll.run(() => {
+	// 	runWebapck();
+	// });
 } else {
 	runWebapck();
 }

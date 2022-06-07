@@ -1,20 +1,10 @@
+// export * from './c.js'
+// export * from './d.js'
 // import x from 'x'
+import fs from "./other.less";
 
-// console.log("b",x)
+function cfun() {}
 
+cfun(fs);
 
-export function fun1(){
-
-}
-
-const b12 = 1212
-
-export {
-	b12
-}
-
-
-
-export default function defFun(){
-
-}
+export { cfun };

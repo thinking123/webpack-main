@@ -4,18 +4,24 @@
 
 // // usedFunction()
 // import x from "x";
+// import c from './c'
 
 // import b from "./b";
 
 // import("./b");
-
-import b from './index.js'
-import b1 from './a'
-import b2 from './b.js'
-
+// import svg from './svg/icon.svg'
+// import b1 from './a'
+// import b2 from './b.js'
 
 
-console.log("b" , b);
+
+// console.log("b" , svg);
+
+import(   /* webpackChunkName: "a" */'./a.js');
+import( /* webpackChunkName: "a" */'./b.js');
+// import( /* webpackChunkName: "d" */'./d.js');
+
+console.log(x )
 // console.log(require("dll/index.js"));
 // console.log(require("beta12"));
 

@@ -1,9 +1,8 @@
-const { util1 } = require("./util/util.js");
+// import { cfun } from "./b.js";
+// import x from 'x'
+// import s from './index.less'
+// cfun(x);
 
-function a() {
-	util1("sdfsdf12dfdfdf");
-}
-
-module.exports = {
-	a
-};
+import _ from 'lodash'
+console.log("bs")
+console.log(_.add(1,2))

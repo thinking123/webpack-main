@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": ["/Users/a/github/webpack-main/webpack-test/a.js"],
+  "names": ["fs"],
+  "mappings": "AACC,OAAOA,EAAP,MAAe,qGAAf;AAEAA,EAAE",
+  "sourcesContent": [
+    "\n\timport fs from \"data:text/js,%0A%0A%0Aexport%20default%20function%20fs()%7B%0A%0A%09console.log(%22sdf%22)%0A%7D%0A\"\n\n\tfs()\n"
+  ]
+}

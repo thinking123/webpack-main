@@ -1,0 +1,13 @@
+{
+	"version": 3,
+	"file": "main.css",
+	"mappings": ";;;AAAA,2BAA2B;;AAE3B;CACC,oBAAoB;AACrB",
+	"sources": [
+		"webpack://webpack/./webpack-test/src/index.css"
+	],
+	"sourcesContent": [
+		"/* @import './other.css'; */\n\n.fs1{\n\tfont-stretch: normal;\n}\n"
+	],
+	"names": [],
+	"sourceRoot": ""
+}
