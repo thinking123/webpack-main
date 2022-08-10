@@ -85,7 +85,7 @@ fs.writeFileSync(
 );
 const getConfig = () => ({
 	parallelism: 1,
-	// devtool: "source-map",
+	devtool: "source-map",
 	// devtool: "eval",
 
 	// entry: () => `!!${resolvePath("src/main.js")}`,
@@ -123,7 +123,7 @@ const getConfig = () => ({
 	// 	// other: { import: resolvePath("src/other.js") , runtime:"funk" },
 	// 	// lodash1: ["lodash"]
 	// },
-	// target:'node',
+	target: "node",
 	experiments: {
 		// lazyCompilation: {
 		// 	test: () => true
@@ -140,9 +140,11 @@ const getConfig = () => ({
 	// entry: resolvePath("src/commonjs-main.js"),
 	// mode: "production",
 	mode: "development",
-	externals: {
-		lodash: "_"
-	},
+	// externals: {
+	// 	// lodash: "_",
+	// 	typescript: "typescript"
+	// },
+	// externalsType: "commonjs",
 	output: {
 		filename: "[name].js",
 		path: resolvePath("dist"),
@@ -169,12 +171,12 @@ const getConfig = () => ({
 		}
 	},
 	module: {
-		defaultRules: [
-			{
-				mimetype: "application/node",
-				type: "javascript/auto"
-			}
-		],
+		// defaultRules: [
+		// 	{
+		// 		mimetype: "application/node",
+		// 		type: "javascript/auto"
+		// 	}
+		// ],
 		rules: [
 			{
 				test: /\.tsx?$/,
@@ -232,32 +234,29 @@ const getConfig = () => ({
 			// 			loader: path.resolve(__dirname, "utils/md-loader.js")
 			// 		}
 			// 	]
-			// },
-			// {
-			// 	test: /\.js$/
-			// 	// use: {
-			// 	// 	loader: "babel-loader",
-			// 	// 	options: {
-			// 	// 		sourceMaps: true,
-			// 	// 		presets: ["@babel/preset-env"]
-			// 	// 	}
-			// 	// }
-			// },
+			// },,
+			{
+				test: /\.js$/,
+				use: {
+					loader: path.join(__dirname, "utils/loader1.js")
+				}
+			},
 			{
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				issuer: /\.js$/,
-				dependency: { not: ["url"] },
-				type: "javascript/auto",
-				use: [
-					{
-						loader: require.resolve("url-loader"),
-						options: {
-							esModule: false,
-							limit: false
-						}
-					}
-				]
-				// type: "asset/resource",
+				// issuer: /\.js$/,
+				// dependency: { not: ["url"] },
+				// type: "javascript/auto",
+				// use: [
+				// 	{
+				// 		loader: require.resolve("url-loader"),
+				// 		options: {
+				// 			esModule: false,
+				// 			limit: false
+				// 		}
+				// 	}
+				// ]
+				type: "asset/resource",
+				// type: "asset/inline",
 			},
 			{
 				test: /\.(le|c)ss$/,
@@ -309,10 +308,10 @@ const getConfig = () => ({
 			"process.env.NODE_ENV": JSON.stringify({ fuck: "12" })
 		}),
 		new MiniCssExtractPlugin({
-			filename: "[name].[hash].css"
+			filename: "[name].css"
 		}),
 		// new HotModuleReplacementPlugin(),
-		// new HtmlWebpackPlugin(),
+		new HtmlWebpackPlugin(),
 		// new BundleAnalyzerPlugin()
 
 		// dll &&
@@ -401,7 +400,7 @@ const getConfig = () => ({
 		// 141 , 60 , 106
 		// moduleIds: "deterministic",
 		// runtimeChunk: "single",
-		// minimize: false,
+		minimize: false,
 		concatenateModules: false,
 		moduleIds: "named",
 		chunkIds: "named",
