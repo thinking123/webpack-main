@@ -386,7 +386,7 @@ const getConfig = () => ({
 			filename: "[name].css"
 		}),
 		new InconsistentVersionofDuplicateModulePlugin({
-			moduleNames: ["c"]
+			moduleNames: ["c" , "b"]
 		}),
 		// new HotModuleReplacementPlugin(),
 		// new HtmlWebpackPlugin(),

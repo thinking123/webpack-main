@@ -3,6 +3,7 @@
 // require('./a2.js')
 require('a')
 require('b')
+require('c')
 // import style from './index.module.less'
 
 // class B1{
