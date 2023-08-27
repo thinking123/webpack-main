@@ -15,7 +15,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const JsxInlineModuleId = require("./custom-hooks/jsx-inline-module-id-hook");
 const JsxSourceMap = require("./custom-hooks/source-map-hook");
 const HotModuleReplacementPlugin = require("../lib/HotModuleReplacementPlugin");
-
+const InconsistentVersionofDuplicateModulePlugin = require('./plugins/inconsistentVersionofDuplicateModulePlugin')
 const smp = new SpeedMeasurePlugin();
 
 const loader = require("./utils/loader1");
@@ -96,7 +96,10 @@ const getConfig = () => ({
 		main: {
 			// import: jsx,
 			// import: path.join(__dirname, "./a.js")
-			import: path.join(__dirname, "./src/a.js")
+			// import: path.join(__dirname, "./src/a.js")
+			// import: path.join(__dirname, "./src/index.tsx")
+			import: path.join(__dirname, "./src/index.ts")
+			// import: path.join(__dirname, "./src/system.js")
 			// import: path.join(__dirname, "./src/index.ts")
 			// dependOn:['b']
 		}
@@ -123,7 +126,8 @@ const getConfig = () => ({
 	// 	// other: { import: resolvePath("src/other.js") , runtime:"funk" },
 	// 	// lodash1: ["lodash"]
 	// },
-	target: "node",
+	// target: "node",
+	// target: "system",
 	experiments: {
 		// lazyCompilation: {
 		// 	test: () => true
@@ -142,13 +146,22 @@ const getConfig = () => ({
 	mode: "development",
 	// externals: {
 	// 	// lodash: "_",
-	// 	typescript: "typescript"
+	// 	react: "react",
+	// 	"react-dom": "reactDom",
 	// },
 	// externalsType: "commonjs",
 	output: {
 		filename: "[name].js",
 		path: resolvePath("dist"),
-		publicPath: "auto"
+		// publicPath: "/static/",
+		// library: {
+		//   name: 'MyLibrary',
+		//   type: 'system',
+		// },
+		library: "umd-test-1",
+		libraryTarget: "umd",
+		// jsonpFunction -> chunkLoadingGlobal
+		chunkLoadingGlobal: "jsonptest_fun1"
 		// library: {
 		// 	// name: 'MyLibrary',
 		// 	type: "commonjs"
@@ -178,6 +191,7 @@ const getConfig = () => ({
 		// 	}
 		// ],
 		rules: [
+			// { test: /\.svg$/, use: ["@svgr/webpack"] },
 			{
 				test: /\.tsx?$/,
 				// mimetype: "text/jsx",
@@ -242,7 +256,7 @@ const getConfig = () => ({
 				}
 			},
 			{
-				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				test: /\.(png|jpg|jpeg|gif|svg)$/i,
 				// issuer: /\.js$/,
 				// dependency: { not: ["url"] },
 				// type: "javascript/auto",
@@ -255,46 +269,107 @@ const getConfig = () => ({
 				// 		}
 				// 	}
 				// ]
-				type: "asset/resource",
+				type: "asset/resource"
 				// type: "asset/inline",
 			},
 			{
-				test: /\.(le|c)ss$/,
-				use: [
-					// {
-					// 	loader: require.resolve("style-loader")
-					// },
+				// test: /\.(le|c)ss$/,
+				test: /\.(less)(\?.*)?$/,
+				oneOf: [
 					{
-						loader: MiniCssExtractPlugin.loader
-					},
-					{
-						loader: require.resolve("css-loader"),
-						options: {
-							sourceMap: true,
-							modules: {
-								mode: "local",
-								localIdentName: "[local]_[hash:base64]",
-								localIdentHashDigestLength: 10,
-								namedExport: false,
-								exportGlobals: true
-								// auto: filename => {
-								// 	wfs(filename);
-								// 	return !/node_modules/.test(filename);
-								// }
+						resourceQuery: /modules/,
+						use: [
+							{
+								loader: MiniCssExtractPlugin.loader
 							},
-							esModule: true
-						}
+							{
+								loader: require.resolve("css-loader"),
+								options: {
+									importLoaders: 1,
+									modules: {
+										localIdentName: "[local]___[hash:base64:5]"
+									}
+									// sourceMap: true,
+									// modules: {
+									// 	mode: "local",
+									// 	localIdentName: "[local]_[hash:base64]",
+									// 	localIdentHashDigestLength: 10,
+									// 	namedExport: false,
+									// 	exportGlobals: true
+
+									// },
+									// esModule: true
+								}
+							},
+
+							// {
+							// 	loader: require.resolve("postcss-loader"),
+							// 	options: {
+							// 		ident: "postcss",
+							// 		plugins: function () {
+							// 			/* omitted long function */
+							// 		}
+							// 	}
+							// },
+							{
+								loader: require.resolve("less-loader"),
+								options: {
+									sourceMap: true,
+									lessOptions: {
+										javascriptEnabled: true,
+										math: "always"
+									}
+									// webpackImporter: false,
+								}
+							}
+						]
 					},
 					{
-						loader: require.resolve("less-loader"),
-						options: {
-							sourceMap: true,
-							lessOptions: {
-								javascriptEnabled: true,
-								math: "always"
+						use: [
+							// {
+							// 	loader: require.resolve("style-loader")
+							// },
+							{
+								loader: MiniCssExtractPlugin.loader
+							},
+							{
+								loader: require.resolve("css-loader"),
+								options: {
+									importLoaders: 1
+									// sourceMap: true,
+									// modules: {
+									// 	mode: "local",
+									// 	localIdentName: "[local]_[hash:base64]",
+									// 	localIdentHashDigestLength: 10,
+									// 	namedExport: false,
+									// 	exportGlobals: true
+
+									// },
+									// esModule: true
+								}
+							},
+
+							// {
+							// 	loader: require.resolve("postcss-loader"),
+							// 	options: {
+							// 		ident: "postcss",
+							// 		plugins: function () {
+							// 			/* omitted long function */
+							// 		}
+							// 	}
+							// },
+							{
+								loader: require.resolve("less-loader"),
+								options: {
+									sourceMap: true,
+									lessOptions: {
+										javascriptEnabled: true,
+										math: "always"
+									}
+									// webpackImporter: false,
+								}
 							}
-							// webpackImporter: false,
-						}
+						]
 					}
 				]
 			}
@@ -302,16 +377,17 @@ const getConfig = () => ({
 	},
 
 	plugins: [
-		new DefinePlugin({
-			Pro: JSON.stringify(true),
-			Pro1: JSON.stringify("pro"),
-			"process.env.NODE_ENV": JSON.stringify({ fuck: "12" })
-		}),
+		// new DefinePlugin({
+		// 	Pro: JSON.stringify(true),
+		// 	Pro1: JSON.stringify("pro"),
+		// 	"process.env.NODE_ENV": JSON.stringify({ fuck: "12" })
+		// }),
 		new MiniCssExtractPlugin({
 			filename: "[name].css"
 		}),
+		new InconsistentVersionofDuplicateModulePlugin(),
 		// new HotModuleReplacementPlugin(),
-		new HtmlWebpackPlugin(),
+		// new HtmlWebpackPlugin(),
 		// new BundleAnalyzerPlugin()
 
 		// dll &&
@@ -433,45 +509,47 @@ const getConfig = () => ({
 		splitChunks: {
 			// chunks: "all",
 			// minSize: 2,
-			// minChunks: 2,
-			cacheGroups: {
-				default: false,
-				defaultVendors: false,
-				// dep1: {
-				// 	name:"bfun",
-				// 	enforce: true,
-				// 	reuseExistingChunk: true,
-				// 	// maxSize: 100,
-				// 	chunks:'all',
-				// 	minSize: 1,
-				// 	minChunks:1,
-				// 	usedExports: true
-				// },
-				css: {
-					chunks: "all",
-					idHint: "css1",
-					name: "css2",
-					minChunks: 1,
-					// minSize: 1,
-					priority: 2,
-					reuseExistingChunk: true,
-					type: "css/mini-extract",
-					test: /(le|c)ss$/i
-				}
-				// dep2: {
-				// 	name:"dep2-name-cacheGroups",
-				// 	reuseExistingChunk: true,
-				// 	// maxSize: 121,
-				// 	minSize: 1
-				// },
-				// dep3: {
-				// 	name:"dep3-name-cacheGroups",
-				// 	enforce: true,
-				// 	reuseExistingChunk: true,
-				// 	// maxSize: 200,
-				// 	minSize: 1
-				// }
-			}
+			// minChunks: 1,
+			cacheGroups: {}
+			// default: {
+			// 	minSize:1
+			// },
+			// defaultVendors: false,
+			// 	// dep1: {
+			// 	// 	name:"bfun",
+			// 	// 	enforce: true,
+			// 	// 	reuseExistingChunk: true,
+			// 	// 	// maxSize: 100,
+			// 	// 	chunks:'all',
+			// 	// 	minSize: 1,
+			// 	// 	minChunks:1,
+			// 	// 	usedExports: true
+			// 	// },
+			// 	css: {
+			// 		chunks: "all",
+			// 		idHint: "css1",
+			// 		name: "css2",
+			// 		minChunks: 1,
+			// 		// minSize: 1,
+			// 		priority: 2,
+			// 		reuseExistingChunk: true,
+			// 		type: "css/mini-extract",
+			// 		test: /(le|c)ss$/i
+			// 	}
+			// 	// dep2: {
+			// 	// 	name:"dep2-name-cacheGroups",
+			// 	// 	reuseExistingChunk: true,
+			// 	// 	// maxSize: 121,
+			// 	// 	minSize: 1
+			// 	// },
+			// 	// dep3: {
+			// 	// 	name:"dep3-name-cacheGroups",
+			// 	// 	enforce: true,
+			// 	// 	reuseExistingChunk: true,
+			// 	// 	// maxSize: 200,
+			// 	// 	minSize: 1
+			// 	// }
+			// }
 		}
 	}
 });

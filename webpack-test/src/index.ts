@@ -1,31 +1,39 @@
-import { fun } from "./bf";
+// import { fun } from "./bf";
+import './a1.js'
+require('./a2.js')
+// import style from './index.module.less'
+
+// class B1{
+
+// 	toString(){
+// 		console.log('B1')
+// 	}
+// }
+
+// class B2{
+
+// 	toString(){
+// 		console.log('B2')
+// 	}
+// }
+// const map = new Map<string ,any>();
+// map.set(B1.name, new B1());
+// map.set(B2.name, new B2());
 
 
-class B1{
+// function cfun(){
+// 	// console.log('serviceLists.keys()', map.keys())
+// 	// console.log('map.values()',map.values())
+// 	// console.log('map.values() arr ',Array.from(map.values()))
+// 	// fun(...map.values());
 
-	toString(){
-		console.log('B1')
-	}
-}
+// 	console.log('style: ' , style.url)
 
-class B2{
+// 	const div = document.createElement('div')
+// 	div.className = style.url
+// 	document.body.appendChild(div)
 
-	toString(){
-		console.log('B2')
-	}
-}
-const map = new Map<string ,any>();
-map.set(B1.name, new B1());
-map.set(B2.name, new B2());
+// }
+// // const b = map.values();
 
-
-function cfun(){
-	console.log('serviceLists.keys()', map.keys())
-	console.log('map.values()',map.values())
-	console.log('map.values() arr ',Array.from(map.values()))
-	fun(...map.values());
-
-}
-// const b = map.values();
-
-cfun()
+// cfun()

@@ -11,7 +11,7 @@ if (module.hot) {
 	var log = require("./log");
 	var check = function check() {
 		module.hot
-			.check(true)
+			.check(true)// HotModuleReplacement.runtime.js : hotCheck
 			.then(function (updatedModules) {
 				if (!updatedModules) {
 					log("warning", "[HMR] Cannot find update. Need to do a full reload!");

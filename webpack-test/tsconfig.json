@@ -19,6 +19,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "noImplicitAny": false,
+
   },
-  "include": ["src/*.ts"]
+  "include": ["src/*.ts" , "src/typing.d.ts"]
 }

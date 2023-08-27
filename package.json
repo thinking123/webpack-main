@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-react": "^7.10.4",
+    "@svgr/webpack": "^6.4.0",
     "@types/es-module-lexer": "^0.4.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^15.0.1",
@@ -91,6 +92,7 @@
     "mini-svg-data-uri": "^1.2.3",
     "nyc": "^15.1.0",
     "open-cli": "^6.0.1",
+    "postcss-loader": "^7.0.1",
     "prettier": "^2.2.0",
     "pretty-format": "^27.0.2",
     "pug": "^3.0.0",
