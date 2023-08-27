@@ -1,6 +1,8 @@
 // import { fun } from "./bf";
-import './a1.js'
-require('./a2.js')
+// import './a1.js'
+// require('./a2.js')
+require('a')
+require('b')
 // import style from './index.module.less'
 
 // class B1{

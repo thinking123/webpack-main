@@ -9,19 +9,20 @@ class InconsistentVersionofDuplicateModuleWarning extends WebpackError {
 		const warnings = Object.keys(allDuplicateModules)
 			.map(moduleName => {
 				const deps = allDuplicateModules[moduleName];
-				const depMsg = deps.map((dep, index) => {
-					return `${index + 1}: 路径:${dep.moduleDir} , 版本: ${dep}`;
-				});
+				const depMsg = deps
+					.map((dep, index) => {
+						return `${index + 1}: 路径:${dep.moduleDir} , 版本: ${dep.version}`;
+					})
+					.join("\n");
 				const msg = `
-					${moduleName} 存在多个版本:
-					${depMsg}
-				`;
+${moduleName} 存在多个版本:
+${depMsg}`;
 
 				return msg;
 			})
 			.join("\n");
 
-		super(warnings);
+		super(`[InconsistentVersionofDuplicateModuleWarning] 存在重复版本:${warnings}`);
 	}
 }
 
@@ -46,7 +47,7 @@ class InconsistentVersionofDuplicateModulePlugin {
 					"InconsistentVersionofDuplicateModulePlugin2",
 					modules => {
 						const allModuleRequests = Array.from(modules || [])
-							.map(md => md.rawRequest)
+							.map(md => md.userRequest)
 							.filter(request => {
 								if (!request) return false;
 								const unixRequest = slash(request);
@@ -66,21 +67,27 @@ class InconsistentVersionofDuplicateModulePlugin {
 						const allModuleDirs = [];
 
 						const moduleRegexNames = this.moduleNames.map(name => {
-							return new RegExp(`${name}`, "g");
+							return new RegExp(`${name}\/`, "g");
 						});
 						allModuleRequests.forEach(request => {
 							const unixRequest = slash(request);
 
-							moduleRegexNames.forEach(regex => {
+							moduleRegexNames.forEach((regex, index) => {
 								let lastMatch = "";
 								let lastIndex = -1;
+								let match;
 								while ((match = regex.exec(unixRequest)) !== null) {
 									lastMatch = match;
 									lastIndex = match.index;
 								}
 
 								if (lastMatch) {
-									allModuleDirs.push(unixRequest.substring(0, lastIndex));
+									allModuleDirs.push(
+										unixRequest.substring(
+											0,
+											lastIndex + this.moduleNames[index].length
+										)
+									);
 								}
 							});
 						});
@@ -101,7 +108,6 @@ class InconsistentVersionofDuplicateModulePlugin {
 								const version = require(packagePath).version;
 
 								if (version) {
-									moduleVersionMap[moduleDir] = version;
 									for (let i = 0; i < moduleVersionNamesRegex.length; i++) {
 										const regex = moduleVersionNamesRegex[i];
 

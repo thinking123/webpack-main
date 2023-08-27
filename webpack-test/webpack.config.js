@@ -15,7 +15,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const JsxInlineModuleId = require("./custom-hooks/jsx-inline-module-id-hook");
 const JsxSourceMap = require("./custom-hooks/source-map-hook");
 const HotModuleReplacementPlugin = require("../lib/HotModuleReplacementPlugin");
-const InconsistentVersionofDuplicateModulePlugin = require('./plugins/inconsistentVersionofDuplicateModulePlugin')
+const InconsistentVersionofDuplicateModulePlugin = require("./plugins/inconsistentVersionofDuplicateModulePlugin");
 const smp = new SpeedMeasurePlugin();
 
 const loader = require("./utils/loader1");
@@ -385,7 +385,9 @@ const getConfig = () => ({
 		new MiniCssExtractPlugin({
 			filename: "[name].css"
 		}),
-		new InconsistentVersionofDuplicateModulePlugin(),
+		new InconsistentVersionofDuplicateModulePlugin({
+			moduleNames: ["c"]
+		}),
 		// new HotModuleReplacementPlugin(),
 		// new HtmlWebpackPlugin(),
 		// new BundleAnalyzerPlugin()
